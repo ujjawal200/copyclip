@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CopyClip
+Comment=Clipboard History Manager
+Exec=copyclip
+Icon=copyclip
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true

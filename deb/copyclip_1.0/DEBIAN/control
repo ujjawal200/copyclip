@@ -1,0 +1,12 @@
+Package: copyclip
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: python3 (>= 3.10), python3-pyqt6, xclip
+Maintainer: Ujjawal <ujjawal200@github.com>
+Description: Lightweight clipboard history manager for Linux
+ CopyClip monitors your clipboard and stores the last 20 copied texts.
+ Access your clipboard history from the system tray icon.
+ Built for developers who copy-paste frequently.
+Homepage: https://github.com/ujjawal200/copyclip
