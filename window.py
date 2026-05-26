@@ -1,9 +1,8 @@
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QListWidget, QListWidgetItem, QPushButton, QLabel, QToggleButton
+    QListWidget, QListWidgetItem, QPushButton, QLabel
 )
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QApplication
 import database
 
@@ -88,10 +87,18 @@ class MainWindow(QMainWindow):
         text = item.data(Qt.ItemDataRole.UserRole)
         if text:
             self._monitor.set_enabled(False)
-            QApplication.clipboard().setText(text)
-            self._monitor.set_enabled(True)
-            self._status.setText("Copied!")
+            import subprocess
+            try:
+                process = subprocess.Popen(
+                    ["xclip", "-selection", "clipboard"],
+                    stdin=subprocess.PIPE
+                )
+                process.communicate(text.encode("utf-8"))
+            except FileNotFoundError:
+                QApplication.clipboard().setText(text)
             from PyQt6.QtCore import QTimer
+            QTimer.singleShot(100, lambda: self._monitor.set_enabled(True))
+            self._status.setText("Copied!")
             QTimer.singleShot(1500, lambda: self._status.setText("Monitoring clipboard..."))
 
     def _on_clear(self):
