@@ -21,6 +21,7 @@ def main():
     def on_new_clip(text):
         database.add_clip(text)
         window.refresh_list()
+        tray.refresh()
 
     monitor.new_clip.connect(on_new_clip)
     tray.show()
