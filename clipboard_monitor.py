@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import QObject, QTimer, pyqtSignal
+import subprocess
 
 
 class ClipboardMonitor(QObject):
@@ -8,15 +9,26 @@ class ClipboardMonitor(QObject):
     def __init__(self):
         super().__init__()
         self._enabled = True
-        self._last_text = ""
-        clipboard = QApplication.clipboard()
-        clipboard.dataChanged.connect(self._on_change)
+        self._last_text = self._read_clipboard()
+        # Poll clipboard every 500ms
+        self._timer = QTimer()
+        self._timer.timeout.connect(self._check_clipboard)
+        self._timer.start(500)
 
-    def _on_change(self):
+    def _read_clipboard(self) -> str:
+        try:
+            result = subprocess.run(
+                ["xclip", "-selection", "clipboard", "-o"],
+                capture_output=True, text=True, timeout=1
+            )
+            return result.stdout if result.returncode == 0 else ""
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return QApplication.clipboard().text() or ""
+
+    def _check_clipboard(self):
         if not self._enabled:
             return
-        clipboard = QApplication.clipboard()
-        text = clipboard.text()
+        text = self._read_clipboard()
         if text and text != self._last_text:
             self._last_text = text
             self.new_clip.emit(text)
