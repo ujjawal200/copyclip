@@ -1,3 +1,5 @@
+![CopyClip Banner](resources/banner.png)
+
 # CopyClip
 
 A lightweight clipboard history manager for Linux. Lives in your system tray — click to access your last 20 copied texts instantly.
@@ -13,6 +15,7 @@ Built for developers and coders who copy-paste frequently.
 - 🗑️ Clear history with one click
 - 💾 Persists across restarts (SQLite)
 - 🐧 GNOME compatible (uses xclip for reliable clipboard access)
+- 🚀 Starts automatically on login
 
 ## Screenshots
 
@@ -27,28 +30,48 @@ Built for developers and coders who copy-paste frequently.
 
 ## Installation
 
-```bash
-# Install system dependency
-sudo apt install xclip
+### Option 1: .deb package (recommended)
 
-# Clone
+```bash
+wget https://github.com/ujjawal200/copyclip/raw/main/copyclip_1.0_all.deb
+sudo dpkg -i copyclip_1.0_all.deb
+sudo apt install -f
+```
+
+### Option 2: Install script
+
+```bash
 git clone https://github.com/ujjawal200/copyclip.git
 cd copyclip
+bash install.sh
+```
 
-# Install Python dependencies
+### Option 3: Run manually
+
+```bash
+git clone https://github.com/ujjawal200/copyclip.git
+cd copyclip
 pip install -r requirements.txt
-
-# Run
 python main.py
 ```
 
 ## Usage
 
-1. Run `python main.py` — a clipboard icon appears in your system tray
+1. After install, CopyClip starts automatically on login
 2. Copy text anywhere — CopyClip saves it automatically
 3. Click the tray icon — see your last 20 clips, click any to re-copy
 4. Right-click tray → "Open CopyClip" for the full app window
 5. Toggle ON/OFF to pause/resume monitoring
+
+## Uninstall
+
+```bash
+# If installed via .deb:
+sudo apt remove copyclip
+
+# If installed via install.sh:
+bash ~/.local/share/copyclip/uninstall.sh
+```
 
 ## Tech Stack
 
@@ -61,8 +84,8 @@ python main.py
 
 - Linux (Ubuntu, Fedora, Arch, etc.)
 - Python 3.10+
-- xclip (`sudo apt install xclip`)
-- System tray support (GNOME with AppIndicator, KDE, XFCE, etc.)
+- xclip
+- System tray support
 
 ## Project Structure
 
@@ -74,7 +97,9 @@ copyclip/
 ├── tray.py              # System tray icon + dropdown menu
 ├── window.py            # Full app window (toggle, list, clear)
 ├── resources/icon.png   # Tray icon
-└── requirements.txt     # PyQt6
+├── install.sh           # One-command installer
+├── uninstall.sh         # Clean removal
+└── copyclip_1.0_all.deb # Debian package
 ```
 
 ## License
