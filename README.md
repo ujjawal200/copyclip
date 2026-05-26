@@ -14,12 +14,6 @@ Built for developers and coders who copy-paste frequently.
 - 💾 Persists across restarts (SQLite)
 - 🐧 GNOME compatible (uses xclip for reliable clipboard access)
 
-## Screenshots
-
-| Tray Dropdown | App Window |
-|---------------|------------|
-| ![tray](screenshots/tray.png) | ![window](screenshots/window.png) |
-
 ## Installation
 
 ```bash
